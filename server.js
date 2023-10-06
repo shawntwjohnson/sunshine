@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 8080;
 
 // MongoDB connection string
 // Replace with your actual connection string from MongoDB Atlas
-const MONGODB_URI = 'mongodb+srv://shawntwj:Sunshine1234!@cluster0.7ogqw4g.mongodb.net/?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/mydatabase';
+
 
 // Connect to MongoDB
 mongoose.connect(MONGODB_URI, {
