@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Logger</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="logger">
+        <h2>Job Logger</h2>
+        <label for="jobNumber">Job Number:</label>
+        <input type="text" id="jobNumber" placeholder="Enter Job Number">
+        <label for="totalLights">Total Lights:</label>
+        <input type="number" id="totalLights" placeholder="Enter Total Number of Lights">
+        <label for="lightType">Type of Lights:</label>
+        <select id="lightType">
+            <option value="singleSided">Single Sided</option>
+            <option value="doubleSided">Double Sided</option>
+            <option value="small">Small</option>
+            <option value="old">Old</option>
+        </select>
+        <button onclick="logJob()">Log Job</button>
+        <button onclick="toggleDeleteMode()">Delete</button>
+        <button onclick="clearAllLogs()">Delete All</button>
+        <h3>Logs</h3>
+        <table id="logsTable">
+            <thead>
+                <tr>
+                    <th>Job Number</th>
+                    <th>Total Lights</th>
+                    <th>Type of Lights</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Logged jobs will appear here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

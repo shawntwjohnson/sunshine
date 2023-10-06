@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stretch Face Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Calculator</h2>
+        <table>
+            <tr>
+                <th>Can</th>
+                <th>Stretch Face</th>
+                <th>#'s</th>
+            </tr>
+            <tr>
+                <td><input type="number" id="canLength" placeholder="Length"></td>
+                <td><input type="number" id="strFaceLength" placeholder="Length"></td>
+                <td id="centerLength">Sides</td>
+            </tr>
+            <tr>
+                <td><input type="number" id="canHeight" placeholder="Height"></td>
+                <td><input type="number" id="strFaceHeight" placeholder="Height"></td>
+                <td id="centerHeight">T&B</td>
+            </tr>
+        </table>
+        <button onclick="calculateEquation()">Calculate</button>
+        <button onclick="clearData()">Clear</button>
+        <h3>Results:</h3>
+        <p><span id="depthSidesCalculation" class="result"></span><span id="depthSides" class="result"></span></p>
+        <p><span id="depthTBCalculation" class="result"></span><span id="depthTB" class="result"></span></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
