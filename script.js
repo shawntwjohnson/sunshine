@@ -1,7 +1,32 @@
 // Declare the logsTableBody variable
 var logsTableBody = document.querySelector("#logsTable tbody");
 
-// Define other functions and logic below
+// Function to fetch and display job logs
+function fetchAndDisplayJobs() {
+    fetch('/get-jobs')
+    .then(response => response.json())
+    .then(jobs => {
+        jobs.forEach(job => {
+            var newRow = logsTableBody.insertRow();
+
+            var cell1 = newRow.insertCell();
+            var cell2 = newRow.insertCell();
+            var cell3 = newRow.insertCell();
+            var cell4 = newRow.insertCell();
+
+            cell1.textContent = job.jobNumber;
+            cell2.textContent = job.totalLights;
+            cell3.textContent = job.lightType;
+            cell4.innerHTML = '<button onclick="deleteJob(this)">Delete</button>';
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching jobs:', error);
+    });
+}
+
+// Call the function to fetch and display job logs when the page loads
+window.onload = fetchAndDisplayJobs;
 
 
 
