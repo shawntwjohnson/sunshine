@@ -21,7 +21,6 @@
             <option value="old">Old</option>
         </select>
         <button onclick="logJob()">Log Job</button>
-        <button onclick="toggleDeleteMode()">Delete</button>
         <button onclick="clearAllLogs()">Delete All</button>
         
         <!-- Logs Section -->
@@ -32,13 +31,16 @@
                     <th>Job Number</th>
                     <th>Total Lights</th>
                     <th>Type of Lights</th>
-                    <th>Actions</th> <!-- Added an Actions column for potential actions like delete -->
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Logged jobs will appear here -->
             </tbody>
         </table>
+
+        <!-- Placeholder for individual job delete buttons -->
+        <div id="deleteButtons"></div>
     </div>
     <script src="script.js"></script>
 </body>

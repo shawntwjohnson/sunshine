@@ -17,7 +17,7 @@ function fetchAndDisplayJobs() {
             cell1.textContent = job.jobNumber;
             cell2.textContent = job.totalLights;
             cell3.textContent = job.lightType;
-            cell4.innerHTML = '<button onclick="deleteJob(this)">Delete</button>';
+            cell4.innerHTML = `<button data-job-id="${job._id}" onclick="deleteJob(this, '${job._id}')">Delete</button>`;
         });
     })
     .catch(error => {
@@ -28,6 +28,7 @@ function fetchAndDisplayJobs() {
 // Call the function to fetch and display job logs when the page loads
 window.onload = fetchAndDisplayJobs;
 
+// Function to calculate the equation
 function calculateEquation() {
     // Get values from the input fields
     var canLength = parseFloat(document.getElementById("canLength").value);
@@ -57,6 +58,7 @@ function calculateEquation() {
     document.getElementById("centerHeight").innerText = "T&B\n" + depthTB.toFixed(2) + "''";
 }
 
+// Function to clear input data and results
 function clearData() {
     // Clear the input fields and results
     document.getElementById("canLength").value = "";
@@ -71,6 +73,7 @@ function clearData() {
     document.getElementById("centerHeight").innerText = "";
 }
 
+// Function to log a job
 function logJob() {
     var jobNumber = document.getElementById("jobNumber").value;
     var totalLights = document.getElementById("totalLights").value;
@@ -103,7 +106,7 @@ function logJob() {
             cell1.textContent = jobNumber;
             cell2.textContent = totalLights;
             cell3.textContent = lightType;
-            cell4.innerHTML = '<button onclick="deleteJob(this)">Delete</button>';
+            cell4.innerHTML = `<button data-job-id="${data.job._id}" onclick="deleteJob(this, '${data.job._id}')">Delete</button>`;
 
             document.getElementById("jobNumber").value = "";
             document.getElementById("totalLights").value = "";
@@ -119,6 +122,7 @@ function logJob() {
     });
 }
 
+// Function to delete a job
 function deleteJob(buttonElement, jobId) {
     fetch(`https://sunshine-way-66d2769a4468.herokuapp.com/jobs/delete/${jobId}`, {
         method: 'DELETE'
@@ -127,7 +131,6 @@ function deleteJob(buttonElement, jobId) {
     .then(data => {
         if (data.message) {
             alert(data.message);
-            // Remove the job row from the table
             buttonElement.parentElement.parentElement.remove();
         } else if (data.error) {
             alert(data.error);
@@ -139,3 +142,7 @@ function deleteJob(buttonElement, jobId) {
     });
 }
 
+// Function to clear all logs
+function clearAllLogs() {
+    logsTableBody.innerHTML = "";
+}
