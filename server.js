@@ -3,15 +3,13 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('dotenv').config(); // Load environment variables from .env file
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// MongoDB connection string
 const MONGODB_URI = process.env.MONGODB_URI;
 
-// Connect to MongoDB
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -19,14 +17,12 @@ mongoose.connect(MONGODB_URI, {
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Failed to connect to MongoDB', err));
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Mongoose schema and model
 const jobLogSchema = new mongoose.Schema({
     jobNumber: String,
     totalLights: String,
@@ -34,7 +30,6 @@ const jobLogSchema = new mongoose.Schema({
 });
 const JobLog = mongoose.model('JobLog', jobLogSchema);
 
-// Endpoints
 app.post('/jobs/log', async (req, res) => {
     try {
         const jobData = req.body;
@@ -49,7 +44,7 @@ app.post('/jobs/log', async (req, res) => {
 
 app.get('/jobs/get', async (req, res) => {
     try {
-        const jobs = await JobLog.find();  // Fetch all job logs from MongoDB
+        const jobs = await JobLog.find();
         res.json(jobs);
     } catch (error) {
         console.error('Error fetching jobs:', error);

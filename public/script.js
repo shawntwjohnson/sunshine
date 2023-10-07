@@ -3,7 +3,7 @@ var logsTableBody = document.querySelector("#logsTable tbody");
 
 // Function to fetch and display job logs
 function fetchAndDisplayJobs() {
-    fetch('https://sunshine-way-66d2769a4468.herokuapp.com/get-jobs')
+    fetch('https://sunshine-way-66d2769a4468.herokuapp.com/jobs/get')
     .then(response => response.json())
     .then(jobs => {
         jobs.forEach(job => {
@@ -82,7 +82,7 @@ function logJob() {
         lightType: lightType
     };
 
-    fetch('https://sunshine-way-66d2769a4468.herokuapp.com/log-job', {
+    fetch('https://sunshine-way-66d2769a4468.herokuapp.com/jobs/log', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
