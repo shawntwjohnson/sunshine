@@ -106,7 +106,14 @@ function logJob() {
             cell1.textContent = jobNumber;
             cell2.textContent = totalLights;
             cell3.textContent = lightType;
-            cell4.innerHTML = `<button data-job-id="${data.job._id}" onclick="deleteJob(this, '${data.job._id}')">Delete</button>`;
+
+            // Create a delete button for this job
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.onclick = function() {
+                deleteJob(this, data.jobId);
+            };
+            cell4.appendChild(deleteButton);
 
             document.getElementById("jobNumber").value = "";
             document.getElementById("totalLights").value = "";
