@@ -51,50 +51,55 @@ function clearData() {
 
 function logJob() {
     
-    // Retrieve input values
     var jobNumber = document.getElementById("jobNumber").value;
     var totalLights = document.getElementById("totalLights").value;
     var lightType = document.getElementById("lightType").value;
-    
-    // Create new row
-    var newRow = logsTableBody.insertRow();
-  
-    // Insert cells
-    var cell1 = newRow.insertCell();
-    var cell2 = newRow.insertCell();
-    var cell3 = newRow.insertCell();
-    var cell4 = newRow.insertCell();
-  
-    // Add content to cells
-    cell1.textContent = jobNumber;
-    cell2.textContent = totalLights;
-    cell3.textContent = lightType;
-    cell4.innerHTML = '<button onclick="deleteJob(this)">Delete</button>';
-   
-    // Clear input fields
-    document.getElementById("jobNumber").value = "";
-    document.getElementById("totalLights").value = "";
-  
-    // Scroll to bottom of the logs table
-    logsTableBody.parentElement.scrollTop = logsTableBody.parentElement.scrollHeight;
-  }
-  
-  function deleteJob(button) {
-    // Get the parent row of the clicked button
-    var row = button.parentElement.parentElement;
-  
-    // Remove the row from the logs table
-    logsTableBody.removeChild(row);
-  }
-  
-  function toggleDeleteMode() {
-    // Toggle the delete mode by adding/removing a CSS class
-    logsTableBody.classList.toggle("delete-mode");
-  }
-  
-  function clearAllLogs() {
-    // Remove all rows from the logs table
-    while (logsTableBody.firstChild) {
-      logsTableBody.removeChild(logsTableBody.firstChild);
-    }
-  }
+
+    const jobData = {
+        jobNumber: jobNumber,
+        totalLights: totalLights,
+        lightType: lightType
+    };
+
+    fetch('/log-job', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jobData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message); 
+            
+            // Create new row
+            var newRow = logsTableBody.insertRow();
+
+            // Insert cells
+            var cell1 = newRow.insertCell();
+            var cell2 = newRow.insertCell();
+            var cell3 = newRow.insertCell();
+            var cell4 = newRow.insertCell();
+
+            // Add content to cells
+            cell1.textContent = jobNumber;
+            cell2.textContent = totalLights;
+            cell3.textContent = lightType;
+            cell4.innerHTML = '<button onclick="deleteJob(this)">Delete</button>';
+
+            // Clear input fields
+            document.getElementById("jobNumber").value = "";
+            document.getElementById("totalLights").value = "";
+
+            // Scroll to bottom of the logs table
+            logsTableBody.parentElement.scrollTop = logsTableBody.parentElement.scrollHeight;
+        } else if (data.error) {
+            alert(data.error); // Provide feedback to the user
+        }
+    })
+    .catch(error => {
+        console.error('Error logging job:', error);
+        alert('Error logging job. Please try again.'); // Provide feedback to the user
+    });
+}
