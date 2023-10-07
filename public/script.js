@@ -3,7 +3,7 @@ var logsTableBody = document.querySelector("#logsTable tbody");
 
 // Function to fetch and display job logs
 function fetchAndDisplayJobs() {
-    fetch('/get-jobs')
+    fetch('https://sunshine-way-66d2769a4468.herokuapp.com/get-jobs')
     .then(response => response.json())
     .then(jobs => {
         jobs.forEach(job => {
@@ -27,8 +27,6 @@ function fetchAndDisplayJobs() {
 
 // Call the function to fetch and display job logs when the page loads
 window.onload = fetchAndDisplayJobs;
-
-
 
 function calculateEquation() {
     // Get values from the input fields
@@ -73,9 +71,7 @@ function clearData() {
     document.getElementById("centerHeight").innerText = "";
 }
 
-
 function logJob() {
-    
     var jobNumber = document.getElementById("jobNumber").value;
     var totalLights = document.getElementById("totalLights").value;
     var lightType = document.getElementById("lightType").value;
@@ -86,7 +82,7 @@ function logJob() {
         lightType: lightType
     };
 
-    fetch('/log-job', {
+    fetch('https://sunshine-way-66d2769a4468.herokuapp.com/log-job', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -98,33 +94,29 @@ function logJob() {
         if (data.message) {
             alert(data.message); 
             
-            // Create new row
             var newRow = logsTableBody.insertRow();
-
-            // Insert cells
             var cell1 = newRow.insertCell();
             var cell2 = newRow.insertCell();
             var cell3 = newRow.insertCell();
             var cell4 = newRow.insertCell();
 
-            // Add content to cells
             cell1.textContent = jobNumber;
             cell2.textContent = totalLights;
             cell3.textContent = lightType;
             cell4.innerHTML = '<button onclick="deleteJob(this)">Delete</button>';
 
-            // Clear input fields
             document.getElementById("jobNumber").value = "";
             document.getElementById("totalLights").value = "";
 
-            // Scroll to bottom of the logs table
             logsTableBody.parentElement.scrollTop = logsTableBody.parentElement.scrollHeight;
         } else if (data.error) {
-            alert(data.error); // Provide feedback to the user
+            alert(data.error);
         }
     })
     .catch(error => {
         console.error('Error logging job:', error);
-        alert('Error logging job. Please try again.'); // Provide feedback to the user
+        alert('Error logging job. Please try again.');
     });
 }
+
+// Add any other functions or event listeners you may have here.

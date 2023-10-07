@@ -23,17 +23,8 @@ mongoose.connect(MONGODB_URI, {
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve static files
-app.use(express.static(path.join(__dirname, '.')));
-
-// Routes
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'logger.html'));
-});
-
-app.get('/calculator', (req, res) => {
-    res.sendFile(path.join(__dirname, 'calculator.html'));
-});
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Mongoose schema and model
 const jobLogSchema = new mongoose.Schema({
@@ -44,7 +35,7 @@ const jobLogSchema = new mongoose.Schema({
 const JobLog = mongoose.model('JobLog', jobLogSchema);
 
 // Endpoints
-app.post('/log-job', async (req, res) => {
+app.post('/jobs/log', async (req, res) => {
     try {
         const jobData = req.body;
         const newJob = new JobLog(jobData);
@@ -56,7 +47,7 @@ app.post('/log-job', async (req, res) => {
     }
 });
 
-app.get('/get-jobs', async (req, res) => {
+app.get('/jobs/get', async (req, res) => {
     try {
         const jobs = await JobLog.find();  // Fetch all job logs from MongoDB
         res.json(jobs);
