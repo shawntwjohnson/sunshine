@@ -55,3 +55,14 @@ app.get('/jobs/get', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+app.delete('/jobs/delete/:id', async (req, res) => {
+    try {
+        const jobId = req.params.id;
+        await JobLog.findByIdAndDelete(jobId);
+        res.json({ message: 'Job deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting job:', error);
+        res.status(500).json({ error: 'Failed to delete job' });
+    }
+});

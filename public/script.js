@@ -119,4 +119,23 @@ function logJob() {
     });
 }
 
-// Add any other functions or event listeners you may have here.
+function deleteJob(buttonElement, jobId) {
+    fetch(`https://sunshine-way-66d2769a4468.herokuapp.com/jobs/delete/${jobId}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            // Remove the job row from the table
+            buttonElement.parentElement.parentElement.remove();
+        } else if (data.error) {
+            alert(data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting job:', error);
+        alert('Error deleting job. Please try again.');
+    });
+}
+
